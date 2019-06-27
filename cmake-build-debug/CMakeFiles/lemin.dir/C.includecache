@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/nwispmot/Desktop/lemin/lem.c
+lemin.h
+/Users/nwispmot/Desktop/lemin/lemin.h
+
+/Users/nwispmot/Desktop/lemin/lemin.h
+libft/libft.h
+/Users/nwispmot/Desktop/lemin/libft/libft.h
+
+/Users/nwispmot/Desktop/lemin/libft/libft.h
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+string.h
+-
+stdlib.h
+-
+unistd.h
+-
+
