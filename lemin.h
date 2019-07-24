@@ -11,8 +11,15 @@ typedef struct      s_room
     int             lvl;
     int             empty_fl;
     int             visited;
+    struct s_room   **parents;
     struct s_room   **links; // массив, содержащий сслыки на связные элементы
-}                   t_room;
+}
+t_room;
+typedef struct      s_path
+{
+    struct s_room   *room;
+    struct s_path   *next;
+}                   t_path;
 
 typedef struct      s_lem
 {
@@ -31,7 +38,10 @@ typedef struct      s_lem
     //int             j_path;
     //int             fl;
     //int             fl1;
+    t_path      	*quick_path;
 }                   t_lem;
+
+
 
 typedef struct      s_valid
 {
@@ -46,19 +56,20 @@ typedef	struct		s_queue
 {
 
     struct s_room   *name;
+    struct s_queue	*prev;
     struct s_queue	*next;
 
 }					t_queue;
 
-typedef struct      s_path
-{
-    int             i;
-    int             j;
-    int             res;
-    int             **path;
-    int             count_paths;
-    //struct  s_path  *next;
-}                   t_path;
+//typedef struct      s_path
+//{
+//    int             i;
+//    int             j;
+//    int             res;
+//    int             **path;
+//    int             count_paths;
+//    //struct  s_path  *next;
+//}                   t_path;
 
 typedef struct      s_res
 {
@@ -79,7 +90,7 @@ void	ft_leave(void);
 void	ft_free(t_room ***room, int i);
 void 	ft_write(char *map, t_room **room, int k);
 t_room	**ft_record(char **map, t_lem *lem);
-void	ft_write_lvl_in_room(t_room **room, int **tmp);
+//void	ft_write_lvl_in_room(t_room **room, int **tmp);
 
 
 # endif
