@@ -85,4 +85,5 @@ add_executable(LEM
         libft/ft_toupper.c
         libft/libft.h
         lem.c
+        repeat.c
         lemin.h)

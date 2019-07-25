@@ -320,6 +320,9 @@
 		<Unit filename="/Users/nwispmot/Desktop/LEM/libft/libft.h">
 			<Option target="LEM"/>
 		</Unit>
+		<Unit filename="/Users/nwispmot/Desktop/LEM/repeat.c">
+			<Option target="LEM"/>
+		</Unit>
 		<Unit filename="/Users/nwispmot/Desktop/LEM/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

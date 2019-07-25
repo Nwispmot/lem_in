@@ -4,7 +4,7 @@ LIB_DIR	 = ./libft
 NAME	 = lem-in
 LIBFT 	 = $(LIB_DIR)/libft.a
 
-SRC 	 = lem.c
+SRC 	 = lem.c repeat.c
 
 OBJ 	 = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 

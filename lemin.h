@@ -1,6 +1,7 @@
 #ifndef LEMIN_H
 #define LEMIN_H
 # define BUFF_SIZE 1024
+# include "libft/libft.h"
 
 typedef struct      s_room
 {
@@ -11,7 +12,9 @@ typedef struct      s_room
     int             lvl;
     int             empty_fl;
     int             visited;
-    struct s_room   **parents;
+    //struct s_room   **parents;
+    struct s_queue  *parents;
+    struct s_queue  *children;
     struct s_room   **links; // массив, содержащий сслыки на связные элементы
 }
 t_room;
@@ -24,20 +27,12 @@ typedef struct      s_path
 typedef struct      s_lem
 {
     int             i;
-    int             j; /* убрать */
-    int             k;
-    int             l;
     int             n;
     int             ants;
     int             count_rooms;
     int             start;
     int             end;
     int             len;
-    //int             max;
-    //int             i_path;
-    //int             j_path;
-    //int             fl;
-    //int             fl1;
     t_path      	*quick_path;
 }                   t_lem;
 
@@ -90,6 +85,8 @@ void	ft_leave(void);
 void	ft_free(t_room ***room, int i);
 void 	ft_write(char *map, t_room **room, int k);
 t_room	**ft_record(char **map, t_lem *lem);
+void    check_repeat_coordinates(t_lem	*lem, t_room **room);
+void    check_repeat_name(t_lem	*lem, t_room **room);
 //void	ft_write_lvl_in_room(t_room **room, int **tmp);
 
 

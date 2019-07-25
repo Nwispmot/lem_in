@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-# include "./libft/libft.h"
+//# include "./libft/libft.h"
 
 void	ft_leave(void)
 {
@@ -443,6 +443,51 @@ void	queue_add(t_queue *qu, t_room *room, int lvl)
 	qu->next = new;
 	new->prev = qu;
 }
+void add_children(t_queue *children, t_room *room)
+{
+	t_queue *new;
+
+	new = NULL;
+	if (!children)
+	{
+		children = (t_queue*)malloc(sizeof(t_queue));
+		children->next = NULL;
+		children->name = room;
+		children->prev = NULL;
+	}
+	else
+	{
+        new = (t_queue*)malloc(sizeof(t_queue));
+        while (children->next != NULL)
+            children = children->next;
+        new->name = room;
+        new->next = NULL;
+        new->prev = children;
+        children->next = new;
+	}
+}
+
+void	ft_children_parents(t_queue *qu)
+{
+	t_queue	*head;
+	int 	i;
+
+	//i = 0;
+	head = qu;
+	while (qu != NULL)
+	{
+		i = 0;
+		while (qu->name->links[i] != NULL)
+		{
+			if (qu->name->links[i]->lvl >= qu->name->lvl)
+			{
+			    add_children(qu->name->children, qu->name->links[i]);
+			}
+			i++;
+		}
+		qu = qu->next;
+	}
+}
 
 void	bfs(t_room **room, t_lem *lem)
 {
@@ -468,8 +513,9 @@ void	bfs(t_room **room, t_lem *lem)
 		i = 0;
 		while (qu->name->links[i] != NULL)
 		{
-			if (qu->name->links[i]->visited == 0)
-                queue_add(qu, qu->name->links[i], lvl);
+			if (qu->name->links[i]->visited == 0) {
+				queue_add(qu, qu->name->links[i], lvl);
+			}
 			i++;
 		}
 		qu = qu->next;
@@ -477,6 +523,7 @@ void	bfs(t_room **room, t_lem *lem)
 		    lvl++;
 	}
 	qu = head;
+	ft_children_parents(qu);
 	while (qu != NULL)
     {
 	    ft_printf("r =%s ", qu->name->name);
@@ -485,6 +532,21 @@ void	bfs(t_room **room, t_lem *lem)
 	    qu = qu->next;
     }
 	ft_printf("\n");
+    i = 0;
+
+    while (room[i] != NULL) {
+        ft_printf("main_room: %s\n", room[i]->name);
+        while (room[i]->children != NULL) {
+            ft_printf("name: %s\n", room[i]->children->name->name);
+            room[i]->children = room[i]->children->next;
+        }
+        ft_printf("\n");
+        if (ft_strcmp(room[i]->name, room[lem->count_rooms - 1]->name) == 0)
+            break;
+        i++;
+    }
+
+
 //	exit(0);
 }
 
@@ -1161,15 +1223,20 @@ int			main(void)
 	ft_initialization_lem(&lem);
 	map = ft_read_map();
 	ft_validation(map, &lem) == 1 ? room = ft_record(map, &lem) : exit (0);
+    check_repeat_name(&lem, room);
+    check_repeat_coordinates(&lem, room);
 	ft_make_links(map, room, &lem);
 	//matrix_copy = ft_copy_matrix(matrix, lem.count_rooms); /* работаем с копией матрицы, т.к. в процессе сбора пути удаляем связи */
+
 	bfs(room, &lem);
 	ft_find_path(room, &lem);
-	while (lem.quick_path != NULL)
+	while (lem.quick_path->next != NULL)
 	{
-		ft_printf("%s ", lem.quick_path->room->name);
+		ft_printf("%s->", lem.quick_path->room->name);
 		lem.quick_path = lem.quick_path->next;
 	}
+    ft_printf("%s", lem.quick_path->room->name);
+	ft_printf("\n");
 	exit(0);
 	//ft_count_levels(room, &lem);
 	//ft_write_lvl_in_room(room, tmp);
