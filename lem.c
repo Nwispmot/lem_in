@@ -388,59 +388,50 @@ void	queue_add(t_queue *qu, t_room *room, int lvl)
 //	}
 //}
 
-t_queue *add_children(t_queue *children, t_room *room)
+void add_children(t_room *children, t_room *room)
 {
     t_queue *new;
-    t_queue *head;
 
-    if (!children)
+    if (!children->children)
     {
-        //children =
-        children = (t_queue*)malloc(sizeof(t_queue));
-        head = children;
-        children->next = NULL;
-        children->name = room;
-        children->prev = NULL;
+        children->children = (t_queue*)malloc(sizeof(t_queue));
+        children->children->next = NULL;
+        children->children->name = room;
+        children->children->prev = NULL;
     }
     else
     {
         new = (t_queue*)malloc(sizeof(t_queue));
-        head = children;
-        while (children->next != NULL)
-            children = children->next;
+        while (children->children->next != NULL)
+            children->children = children->children->next;
         new->name = room;
         new->next = NULL;
-        new->prev = children;
-        children->next = new;
+        new->prev = children->children;
+        children->children->next = new;
     }
-    return (head);
 }
 
 void add_parent(t_room *parent, t_room *room)
 {
     t_queue *new;
-   // t_queue *head;
 
-    if (!parent->children)
+    if (!parent->parents)
     {
-        parent->children = (t_queue*)malloc(sizeof(t_queue));
-       // head = parent;
-        parent->children->next = NULL;
-        parent->children->name = room;
-        parent->children->prev = NULL;
+        parent->parents = (t_queue*)malloc(sizeof(t_queue));
+        parent->parents->next = NULL;
+        parent->parents->name = room;
+        parent->parents->prev = NULL;
     }
     else
     {
         new = (t_queue*)malloc(sizeof(t_queue));
-        //head = parent;
-        while (parent->children->next != NULL)
-            parent->children = parent->children->next;
+        while (parent->parents->next != NULL)
+            parent->parents = parent->children->next;
         new->name = room;
         new->next = NULL;
-        new->prev = parent->children;
-        parent->children->next = new;
+        new->prev = parent->parents;
+        parent->parents->next = new;
     }
-    //return (head);
 }
 
 void	ft_children_parents(t_queue *qu)
@@ -458,9 +449,11 @@ void	ft_children_parents(t_queue *qu)
 		{
 			if (qu->name->links[i]->lvl >= qu->name->lvl)
 			{
-			    qu->name->children = add_children(qu->name->children, qu->name->links[i]);
-			   // qu->name->links[i]->parents =
-			   add_parent(qu->name->links[i], qu->name);
+				if (qu->name->end != 1)
+				{
+					add_children(qu->name, qu->name->links[i]);
+                    add_parent(qu->name->links[i], qu->name);
+				}
 			}
 			i++;
 		}
@@ -503,13 +496,27 @@ void	bfs(t_room **room)
 	qu = head;
 	ft_children_parents(qu);
 	i = 0;
+	ft_printf("children\n");
     while (room[i])
     {
         ft_printf("room = %s | ", room[i]->name);
         while(room[i]->children != NULL)
         {
-            ft_printf("c = %s ", head->name->children->name);
-            head->name->children = head->name->children->next;
+            ft_printf("c = %s ", room[i]->children->name->name);
+            room[i]->children = room[i]->children->next;
+        }
+        ft_printf("\n");
+        i++;
+    }
+    i = 0;
+    ft_printf("parent\n");
+    while (room[i])
+    {
+        ft_printf("room = %s | ", room[i]->name);
+        while(room[i]->parents != NULL)
+        {
+            ft_printf("c = %s ", room[i]->parents->name->name);
+            room[i]->parents = room[i]->parents->next;
         }
         ft_printf("\n");
         i++;
@@ -597,11 +604,13 @@ t_room 	**ft_record(char **map, t_lem *lem) /* записываем name и ко
 		{
 			i++;
 		    ft_write(map[i], room, 0); /* записать старт на 0 место */
+			room[0]->start = 1;
 		}
 		else if ((map[i][0] == '#' && valid_resh == 2))
 		{
 			i++;
 			ft_write(map[i], room, lem->count_rooms - 1); /*записать end на *room[lem->count_rooms - 1] */
+			room[lem->count_rooms -1]->end = 1;
 		}
 		else if (ft_valid_str(map[i]) == 4)
 		{
