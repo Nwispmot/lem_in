@@ -426,7 +426,7 @@ void add_parent(t_room *parent, t_room *room)
     {
         new = (t_queue*)malloc(sizeof(t_queue));
         while (parent->parents->next != NULL)
-            parent->parents = parent->children->next;
+            parent->parents = parent->parents->next;
         new->name = room;
         new->next = NULL;
         new->prev = parent->parents;
