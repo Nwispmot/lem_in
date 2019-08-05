@@ -426,7 +426,7 @@ void add_parent(t_room *parent, t_room *room)
     {
         new = (t_queue*)malloc(sizeof(t_queue));
         while (parent->parents->next != NULL)
-            parent->parents = parent->children->next;
+            parent->parents = parent->parents->next;
         new->name = room;
         new->next = NULL;
         new->prev = parent->parents;
@@ -560,13 +560,12 @@ void	ft_add_node_path(t_room *room, t_path **path)
 	}
 }
 
-void	ft_find_path(t_room **room, t_lem *lem)
+void	ft_find_quick_path(t_room **room, t_lem *lem)
 {
 	int 	i;
 	t_room	*temp;
 	t_path	*path;
 
-	i = 0;
 	temp = room[lem->count_rooms - 1];
 	path = (t_path*)malloc(sizeof(t_path));
 	path->room = temp;
@@ -583,6 +582,29 @@ void	ft_find_path(t_room **room, t_lem *lem)
 
 	//return (rooms[lem->count_rooms - 1]->links[i]->lvl);
 
+}
+
+t_room	**ft_copy(t_room **room, t_lem *lem) {
+	int 	i;
+	t_room	**temp;
+
+	i = 0;
+	temp = ft_allocate_memory(lem);
+	while (room[i] != NULL)
+	{
+		ft_memcpy(temp[i], room[i], sizeof(t_room));
+		temp[i]->name = ft_strdup(room[i]->name);
+
+
+		i++;
+	}
+}
+
+void ft_find_other_path(t_room	**room, t_lem *lem)
+{
+    t_room	**copy;
+
+    copy = ft_copy(room, lem);
 }
 
 t_room 	**ft_record(char **map, t_lem *lem) /* записываем name и координаты (без связей) */
@@ -782,7 +804,8 @@ int			main(void)
     check_repeat_coordinates(&lem, room);
 	ft_make_links(map, room, &lem);
 	bfs(room);
-	ft_find_path(room, &lem);
+	ft_find_quick_path(room, &lem);
+	ft_find_other_path(room, &lem);
 	while (lem.quick_path->next != NULL)
 	{
 		ft_printf("%s->", lem.quick_path->room->name);

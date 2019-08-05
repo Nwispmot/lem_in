@@ -75,7 +75,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/LEM.dir/libft/ft_toupper.c.o"
   "CMakeFiles/LEM.dir/lem.c.o"
   "CMakeFiles/LEM.dir/repeat.c.o"
-  "CMakeFiles/LEM.dir/draft.c.o"
   "LEM.pdb"
   "LEM"
 )

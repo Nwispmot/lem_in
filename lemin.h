@@ -58,16 +58,6 @@ typedef	struct		s_queue
 
 }					t_queue;
 
-//typedef struct      s_path
-//{
-//    int             i;
-//    int             j;
-//    int             res;
-//    int             **path;
-//    int             count_paths;
-//    //struct  s_path  *next;
-//}                   t_path;
-
 typedef struct      s_res
 {
     int             i;

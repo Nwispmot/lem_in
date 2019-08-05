@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/nwispmot/Desktop/LEM/draft.c" "/Users/nwispmot/Desktop/LEM/cmake-build-debug/CMakeFiles/LEM.dir/draft.c.o"
   "/Users/nwispmot/Desktop/LEM/lem.c" "/Users/nwispmot/Desktop/LEM/cmake-build-debug/CMakeFiles/LEM.dir/lem.c.o"
   "/Users/nwispmot/Desktop/LEM/libft/ft_atoi.c" "/Users/nwispmot/Desktop/LEM/cmake-build-debug/CMakeFiles/LEM.dir/libft/ft_atoi.c.o"
   "/Users/nwispmot/Desktop/LEM/libft/ft_bzero.c" "/Users/nwispmot/Desktop/LEM/cmake-build-debug/CMakeFiles/LEM.dir/libft/ft_bzero.c.o"

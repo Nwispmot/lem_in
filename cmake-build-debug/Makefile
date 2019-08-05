@@ -123,33 +123,6 @@ LEM/fast:
 	$(MAKE) -f CMakeFiles/LEM.dir/build.make CMakeFiles/LEM.dir/build
 .PHONY : LEM/fast
 
-draft.o: draft.c.o
-
-.PHONY : draft.o
-
-# target to build an object file
-draft.c.o:
-	$(MAKE) -f CMakeFiles/LEM.dir/build.make CMakeFiles/LEM.dir/draft.c.o
-.PHONY : draft.c.o
-
-draft.i: draft.c.i
-
-.PHONY : draft.i
-
-# target to preprocess a source file
-draft.c.i:
-	$(MAKE) -f CMakeFiles/LEM.dir/build.make CMakeFiles/LEM.dir/draft.c.i
-.PHONY : draft.c.i
-
-draft.s: draft.c.s
-
-.PHONY : draft.s
-
-# target to generate assembly for a file
-draft.c.s:
-	$(MAKE) -f CMakeFiles/LEM.dir/build.make CMakeFiles/LEM.dir/draft.c.s
-.PHONY : draft.c.s
-
 lem.o: lem.c.o
 
 .PHONY : lem.o
@@ -2211,9 +2184,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... LEM"
-	@echo "... draft.o"
-	@echo "... draft.i"
-	@echo "... draft.s"
 	@echo "... lem.o"
 	@echo "... lem.i"
 	@echo "... lem.s"
