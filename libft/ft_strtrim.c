@@ -3,51 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hluton <hluton@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/16 20:03:02 by draudrau          #+#    #+#             */
-/*   Updated: 2019/01/20 17:07:39 by draudrau         ###   ########.fr       */
+/*   Created: 2018/12/23 00:15:09 by hluton            #+#    #+#             */
+/*   Updated: 2018/12/23 16:06:25 by hluton           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	char	*ft_null_s(void)
+char	*ft_strtrim(char const *s)
 {
-	char *null_s;
-
-	if ((null_s = (char*)malloc(1)) == NULL)
-		return (NULL);
-	else
-		null_s[0] = '\0';
-	return (null_s);
-}
-
-char			*ft_strtrim(char const *s)
-{
+	char	*fresh;
 	size_t	i;
-	size_t	k;
-	size_t	w;
-	char	*tab;
+	size_t	len;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
+	len = ft_strlen(s);
 	i = 0;
 	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
 		i++;
-	if (*s == '\0' || i == ft_strlen(s))
-		return (ft_null_s());
-	w = 0;
-	k = ft_strlen(s) - 1;
-	while (s[k] == ' ' || s[k] == '\n' || s[k] == '\t')
-		k--;
-	if ((tab = (char*)malloc(k - i + 2)) == NULL)
-		return (NULL);
-	while (k >= i + w)
-	{
-		tab[w] = s[i + w];
-		w++;
-	}
-	tab[w] = '\0';
-	return (tab);
+	if (s[i] == '\0')
+		return (ft_strnew(0));
+	while (s[len - 1] == ' ' || s[len - 1] == '\n' || s[len - 1] == '\t')
+		len--;
+	fresh = ft_strsub(s, i, len - i);
+	return (fresh);
 }

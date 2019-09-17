@@ -3,52 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hluton <hluton@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/19 19:00:58 by draudrau          #+#    #+#             */
-/*   Updated: 2019/01/20 15:57:30 by draudrau         ###   ########.fr       */
+/*   Created: 2018/12/29 18:42:18 by hluton            #+#    #+#             */
+/*   Updated: 2018/12/29 19:19:31 by hluton           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_free(t_list **list)
-{
-	t_list	*tmp;
-
-	tmp = (*list);
-	while ((*list)->next)
-	{
-		tmp = (*list)->next;
-		free(*list);
-		(*list) = tmp;
-	}
-	*list = NULL;
-	return ;
-}
-
 t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*start;
-	t_list	*new;
+	t_list	*fresh;
 
-	if (!lst || !(*f))
-		return (NULL);
-	if (!(new = (t_list*)malloc(sizeof(t_list))))
-		return (NULL);
-	new = f(lst);
-	start = new;
-	while (lst->next)
+	if (lst)
 	{
-		lst = lst->next;
-		if (!(new->next = (t_list*)malloc(sizeof(t_list))) ||
-		!(new->next = f(lst)))
-		{
-			ft_free(&start);
-			return (NULL);
-		}
-		new = new->next;
+		fresh = f(lst);
+		fresh->next = ft_lstmap(lst->next, f);
+		return (fresh);
 	}
-	new->next = NULL;
-	return (start);
+	return (NULL);
 }

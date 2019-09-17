@@ -3,37 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: draudrau <draudrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hluton <hluton@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/13 16:31:01 by eharrag-          #+#    #+#             */
-/*   Updated: 2019/06/19 22:21:58 by draudrau         ###   ########.fr       */
+/*   Created: 2018/12/20 20:08:03 by hluton            #+#    #+#             */
+/*   Updated: 2018/12/22 20:09:02 by hluton           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int			ft_atoi(const char *s)
+int		ft_atoi(const char *nptr)
 {
-	long long	result;
-	int			sign;
+	int		i;
+	int		sum;
+	char	*ptr;
+	int		flag;
 
-	result = 0;
-	sign = 1;
-	while (*s == 32 || (*s >= 9 && *s <= 13))
-		s++;
-	if (*s == '-')
+	flag = 0;
+	ptr = (char *)nptr;
+	sum = 0;
+	i = 0;
+	while ((ptr[i] <= 13 && ptr[i] >= 9) || ptr[i] == 32)
+		i++;
+	if (ptr[i] == '-')
+		flag = 1;
+	if (ptr[i] == '-' || ptr[i] == '+')
+		i++;
+	while (ptr[i] && (ptr[i] >= '0' && ptr[i] <= '9'))
 	{
-		sign = -1;
-		s++;
+		sum = (sum * 10 + (ptr[i] - 48));
+		i++;
 	}
-	else if (*s == '+')
-		s++;
-	while (*s >= '0' && *s <= '9')
-	{
-		if ((result * 10) / 10 != result || result * 10 + *s - '0' < 0)
-			return (sign > 0 ? -1 : 0);
-		result = result * 10 + *s - '0';
-		s++;
-	}
-	return (sign * (int)result);
+	if (flag)
+		return (sum * (-1));
+	return (sum);
 }
